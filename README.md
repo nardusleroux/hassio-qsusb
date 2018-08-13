@@ -7,7 +7,7 @@ The add-on will communicate via USB port to QSUSB modem that communicates via RF
 The qwikswitch component (https://www.home-assistant.io/components/qwikswitch/) will provide support within Home-assistant. Tested on Hass.io version 0.75 and above on HassOS (1.9) on Raspberry Pi 2.
 
 ### Installation
-1. Add the add-ons repository to your Hass.io instance: `https://github.com/nardusleroux/hassio-qsusb`
+1. Currently the addon should be added as local build. Follow step 1 and step 2 of `https://developers.home-assistant.io/docs/en/hassio_addon_tutorial.html`
 2. Install the QSUSB add-on
 3. Configure the Qwikswitch devices in the Config section. 
 
@@ -35,14 +35,7 @@ Example Configuration:
   ]
 }
 ```
-Add the url of the QSUSB addon to the Home Assistant configuration.yaml file. No need to define the devices in the configuration.yaml file.
-Example for configuration.yaml
-```yaml
-qwikswitch:
-  url: http://<hassos ip address>:2020
-```
 
 The entries above will be written to the devices file that are used by the QSUSB software to make devices persistent across upgrades and restarts.
 
 ----
-
