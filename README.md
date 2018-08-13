@@ -35,6 +35,11 @@ Example Configuration:
   ]
 }
 ```
+Add the url of the QSUSB addon to the Home Assistant configuration.yaml file
+```yaml
+qwikswitch:
+  url: http://<hassos ip address>:2020
+```
 
 The entries above will be written to the devices file that are used by the QSUSB software to make devices persistent across upgrades and restarts.
 
