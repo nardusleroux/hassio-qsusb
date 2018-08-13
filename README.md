@@ -35,7 +35,8 @@ Example Configuration:
   ]
 }
 ```
-Add the url of the QSUSB addon to the Home Assistant configuration.yaml file
+Add the url of the QSUSB addon to the Home Assistant configuration.yaml file. No need to define the devices in the configuration.yaml file.
+Example for configuration.yaml
 ```yaml
 qwikswitch:
   url: http://<hassos ip address>:2020
