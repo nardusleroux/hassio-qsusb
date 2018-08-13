@@ -1,0 +1,26 @@
+{
+  "slug": "qsusb", 
+  "description": "qsusb modem", 
+  "name": "qsusb", 
+  "startup": "before", 
+  "boot": "auto", 
+  "devices": [
+    "/dev/bus/usb:/dev/bus/usb:rwm"
+  ], 
+  "ports": {
+    "2020/tcp": 2020
+  }, 
+  "version": "0.6", 
+  "arch": ["armhf"],
+  "options": {
+    "devices": [
+      { "string": "@129b70/rel/Sitkamer tafel lamp" },
+      { "string": "@16aa30/rel/Sitkamer staan lamp" }
+    ]
+  },
+  "schema": {
+    "devices": [
+      { "string": "str" }
+    ]
+  }
+}
