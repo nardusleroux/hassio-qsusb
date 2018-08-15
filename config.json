@@ -1,24 +1,31 @@
 {
+  "name": "QwikSwitch USB Hub",
   "slug": "qsusb", 
-  "description": "qsusb modem", 
-  "name": "qsusb", 
+  "description": "Add-on for the QwikSwitch USB Hub",
+  "version": "0.7", 
   "startup": "before", 
   "boot": "auto", 
+  "url": "http://www.qwikswitch.co.za",
+  "webui": "http://[HOST]:[PORT:2020]",
   "devices": [
     "/dev/bus/usb:/dev/bus/usb:rwm"
   ], 
-  "ports": {
-    "2020/tcp": 2020
-  }, 
-  "version": "0.6", 
-  "arch": ["armhf"],
+  "arch": [
+    "aarch64",
+    "amd64",
+    "armhf",
+    "i386"
+  ],
+  "host_network": true,
   "options": {
+    "port": "2020",
     "devices": [
       { "string": "@129b70/rel/Study lamp" },
       { "string": "@16aa30/rel/Kitchen lamp" }
     ]
   },
   "schema": {
+    "port": "int",
     "devices": [
       { "string": "str" }
     ]

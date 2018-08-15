@@ -20,6 +20,8 @@ Add the Qwikswitch section as per the Qwikswitch component (https://www.home-ass
 
 ### Configuration
 
+The port can be changed from the default value of 2020.
+
 Add the devices in the config section of Hass.io add-on.
 
 Example Configuration:
@@ -35,6 +37,15 @@ Example Configuration:
   ]
 }
 ```
+Each device string is divided into 3 parts separated with a forward-slash (/), the first part is the QS device ID/device type/name of device.  The following device types are applicable:
+
+ - rel - Relay
+ - dim - Dimmer
+ - art - SwitchArt
+ - tmp - Temperature Sensor
+ - hum - Humidity Sensor
+ - gey - Geyser
+ - bli - Motor/Controller
 
 The entries above will be written to the devices file that are used by the QSUSB software to make devices persistent across upgrades and restarts.
 
