@@ -30,4 +30,5 @@
       { "string": "str" }
     ]
   }
+  "image": "hassioaddons/qsusb-{arch}"
 }
