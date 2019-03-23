@@ -2,7 +2,7 @@
   "name": "QwikSwitch USB Hub",
   "slug": "qsusb", 
   "description": "Add-on for the QwikSwitch USB Hub",
-  "version": "0.7", 
+  "version": "0.8",
   "startup": "before", 
   "boot": "auto", 
   "url": "http://www.qwikswitch.co.za",
@@ -14,8 +14,10 @@
     "aarch64",
     "amd64",
     "armhf",
+    "armv7",
     "i386"
   ],
+  "hassio_role": "default",
   "host_network": true,
   "options": {
     "port": "2020",
@@ -30,5 +32,4 @@
       { "string": "str" }
     ]
   }
-  "image": "hassioaddons/qsusb-{arch}"
 }

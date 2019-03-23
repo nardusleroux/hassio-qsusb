@@ -1,33 +1,37 @@
-ARG BUILD_FROM=hassioaddons/ubuntu-base-armhf:2.0.0
+ARG BUILD_FROM=hassioaddons/ubuntu-base:3.0.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
-# Setup base
-ARG BUILD_ARCH=armhf
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
+# Setup base
+ARG BUILD_ARCH=amd64
 WORKDIR /qsusb
 
 # Install requirements for add-on
-RUN apt-get update && apt-get install -q -y --no-install-recommends \
-    libusb-1.0 \
-    unzip \
-    wget \
-    jq
-
-RUN FILE=qsusb_pi_V1.91.zip \
+RUN \
+    FILE="qsusb_pi_V1.91.zip" \
+    && if [ "${BUILD_ARCH}" = "armhf" ] \
+        || [ "${BUILD_ARCH}" = "armv7" ] \
+        || [ "${BUILD_ARCH}" = "aarch64" ]; then \
+        FILE="qsusb_pi_V1.91.zip"; \
+    fi \
+    && if [ "${BUILD_ARCH}" = "i386" ] \
+        || [ "${BUILD_ARCH}" = "amd64" ]; then \
+        FILE="QSUSB_linux.zip"; \
+    fi \
+    && apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        libusb-1.0 \
+        unzip \
+        wget \
+        jq \
+    \
     && wget https://cdn.shopify.com/s/files/1/1883/0535/files/${FILE} \
     \
     && unzip ${FILE}
-
-# Pick the correct download based on the architecture, but no architecture is being selected by the IF statements.
-# RUN if [[ "${BUILD_ARCH}" = "aarch64" ]]; then FILE="qsusb_pi_V1.91.zip"; fi \
-#     && if [[ "${BUILD_ARCH}" = "amd64" ]]; then FILE="QSUSB_linux.zip"; fi \
-#     && if [[ "${BUILD_ARCH}" = "armhf" ]]; then FILE="qsusb_pi_V1.91.zip"; fi \
-#     && if [[ "${BUILD_ARCH}" = "i386" ]]; then FILE="QSUSB_linux.zip"; fi \
-#     \
-#     && wget https://cdn.shopify.com/s/files/1/1883/0535/files/${FILE} \
-#     \
-#     && unzip ${FILE}
 
 COPY run.sh /
 RUN chmod a+x /run.sh
