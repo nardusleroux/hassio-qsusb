@@ -33,8 +33,21 @@ RUN \
     \
     && unzip ${FILE}
 
+# Copy run.sh script which is used to run qsusb
 COPY run.sh /
-RUN chmod a+x /run.sh
+
+# Copy v1.65 of the www directory.  Qwikswitch was contacted to request them to upgrade the Pi and Linux zip files
+# with the same version of the www directory as found in the Windows version.  Due to delays on their side, we are 
+# budling and deploying this with the add-on.  This will be removed once they have updated their zip files.
+# The latest version of the www pages allows relays to be put into link mode via the web interface.
+COPY www.zip /
+
+RUN \
+    chmod a+x /run.sh \
+    \
+    && rm -rf /qsusb/QSUSB/www \
+    \
+    && unzip /www.zip -d /qsusb/QSUSB/
 
 CMD [ "/run.sh" ]
 
