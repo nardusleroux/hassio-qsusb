@@ -1,58 +1,58 @@
-ARG BUILD_FROM=hassioaddons/ubuntu-base:3.0.0
+ARG BUILD_FROM=hassioaddons/ubuntu-base:5.2.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Setup base
-ARG BUILD_ARCH=amd64
-WORKDIR /qsusb
+# Setup base system
+RUN \
+    apt-get update \
+    \
+    && apt-get install -y --no-install-recommends \
+        jq libusb-1.0 wget unzip \
+    \
+    && rm -fr \
+        /tmp/* \
+        /var/{cache,log}/* \
+        /var/lib/apt/lists/*
 
-# Install requirements for add-on
+# Copy run.sh script which is used to run qsusb
+WORKDIR /qsusb
+COPY run.sh .
+
+# Install qsusb
 RUN \
     FILE="qsusb_pi_V1.91.zip" \
-    && if [ "${BUILD_ARCH}" = "armhf" ] \
-        || [ "${BUILD_ARCH}" = "armv7" ] \
-        || [ "${BUILD_ARCH}" = "aarch64" ]; then \
-        FILE="qsusb_pi_V1.91.zip"; \
-    fi \
     && if [ "${BUILD_ARCH}" = "i386" ] \
         || [ "${BUILD_ARCH}" = "amd64" ]; then \
         FILE="QSUSB_linux.zip"; \
     fi \
-    && apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-        libusb-1.0 \
-        unzip \
-        wget \
-        jq \
     \
     && wget https://cdn.shopify.com/s/files/1/1883/0535/files/${FILE} \
     \
-    && unzip ${FILE}
-
-# Copy run.sh script which is used to run qsusb
-COPY run.sh /
+    && unzip ${FILE} \
+    \
+    && rm ${FILE}
 
 # Copy v1.65 of the www directory.  Qwikswitch was contacted to request them to upgrade the Pi and Linux zip files
-# with the same version of the www directory as found in the Windows version.  Due to delays on their side, we are 
+# with the same version of the www directory as found in the Windows version.  Due to delays on their side, we are
 # budling and deploying this with the add-on.  This will be removed once they have updated their zip files.
 # The latest version of the www pages allows relays to be put into link mode via the web interface.
-COPY www.zip /
-
+COPY www.zip .
 RUN \
-    chmod a+x /run.sh \
+    chmod a+x run.sh \
     \
-    && rm -rf /qsusb/QSUSB/www \
+    && rm -rf QSUSB/www \
     \
-    && unzip /www.zip -d /qsusb/QSUSB/
+    && unzip www.zip -d QSUSB/ \
+    \
+    && rm www.zip
 
-CMD [ "/run.sh" ]
+CMD [ "run.sh" ]
 
-# Build arugments
-ARG BUILD_ARCH
+# Build arguments
+ARG BUILD_ARCH=amd64
 ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION

@@ -1,15 +1,15 @@
 {
   "name": "QwikSwitch USB Hub",
-  "slug": "qsusb", 
+  "slug": "qsusb",
   "description": "Add-on for the QwikSwitch USB Hub",
-  "version": "0.9",
-  "startup": "before", 
-  "boot": "auto", 
-  "url": "http://www.qwikswitch.co.za",
+  "version": "0.91",
+  "startup": "before",
+  "boot": "auto",
+  "url": "https://github.com/nardusleroux/hassio-qsusb",
   "webui": "http://[HOST]:[PORT:2020]",
   "devices": [
     "/dev/bus/usb:/dev/bus/usb:rwm"
-  ], 
+  ],
   "arch": [
     "aarch64",
     "amd64",
@@ -17,6 +17,12 @@
     "armv7",
     "i386"
   ],
+  "ports": {
+    "2020/tcp": 2020
+  },
+  "ports_description": {
+    "2020/tcp": "QS USB Web UI"
+  },
   "hassio_role": "default",
   "host_network": true,
   "options": {
