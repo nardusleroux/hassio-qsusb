@@ -26,14 +26,12 @@
   "hassio_role": "default",
   "host_network": true,
   "options": {
-    "port": "2020",
     "devices": [
       { "string": "@129b70/rel/Study lamp" },
       { "string": "@16aa30/rel/Kitchen lamp" }
     ]
   },
   "schema": {
-    "port": "int",
     "devices": [
       { "string": "str" }
     ]
