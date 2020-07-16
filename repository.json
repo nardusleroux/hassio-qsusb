@@ -1,4 +1,5 @@
 {
-    "name": "Qwikswitch QSUSB hub",
-    "url": "https://github.com/nardusleroux/hassio-qsusb"
+    "name": "QwikSwitch USB Hub",
+    "url": "https://github.com/nardusleroux/hassio-qsusb",
+    "maintainer": ""
 }

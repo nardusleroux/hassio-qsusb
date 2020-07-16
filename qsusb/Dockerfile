@@ -17,6 +17,12 @@ RUN \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
 
+# Build arguments
+ARG BUILD_ARCH
+ARG BUILD_DATE
+ARG BUILD_REF
+ARG BUILD_VERSION
+
 # Copy run.sh script which is used to run qsusb
 WORKDIR /qsusb
 COPY run.sh .
@@ -33,11 +39,22 @@ RUN \
     \
     && unzip ${FILE} \
     \
-    && rm ${FILE}
+    && rm ${FILE} \
+    \
+    && echo "FILE=${FILE}" > /qsusb/env.txt \
+    \
+    && printenv | grep BUILD >> /qsusb/env.txt
 
-# Copy v1.65 of the www directory.  Qwikswitch was contacted to request them to upgrade the Pi and Linux zip files
+# QSUSB_linux.zip contains a different folder structure
+# The 64 bit version is not executable
+RUN if [ -d ./QSUSB_linux ]; then \
+        mv ./QSUSB_linux/QSUSB . ; \
+        chmod a+x ./QSUSB/qsusb* ; \
+    fi
+
+# Copy v1.65 of the www directory.  QwikSwitch was contacted to request them to upgrade the Pi and Linux zip files
 # with the same version of the www directory as found in the Windows version.  Due to delays on their side, we are
-# budling and deploying this with the add-on.  This will be removed once they have updated their zip files.
+# bundling and deploying this with the add-on.  This will be removed once they have updated their zip files.
 # The latest version of the www pages allows relays to be put into link mode via the web interface.
 COPY www.zip .
 RUN \
@@ -49,13 +66,7 @@ RUN \
     \
     && rm www.zip
 
-CMD [ "run.sh" ]
-
-# Build arguments
-ARG BUILD_ARCH=amd64
-ARG BUILD_DATE
-ARG BUILD_REF
-ARG BUILD_VERSION
+CMD [ "./run.sh" ]
 
 # Labels
 LABEL \

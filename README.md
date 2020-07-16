@@ -10,9 +10,11 @@ The [qwikswitch component](https://www.home-assistant.io/components/qwikswitch/)
 
 ## Installation
 
-1. Currently the addon should be added as local build. Follow step 1 and step 2 of [Local add-on testing](https://developers.home-assistant.io/docs/add-ons/testing)
-2. Install the QSUSB add-on
+1. Add the repository through the HomeAssistant Supervisor `https://github.com/nardusleroux/hassio-qsusb`. (From the HomeAssistant frontend: *Supervisor* > *Add-on store* > *...* > *Repositories*)
+2. Install the *QwikSwitch USB Hub* Addon
 3. Configure the Qwikswitch devices in the Config section.
+
+Note: Local install can be done for development: Follow step 1 and step 2 of [Local add-on testing](https://developers.home-assistant.io/docs/add-ons/testing)
 
 ## Usage
 
@@ -22,14 +24,13 @@ Add the Qwikswitch section as per the [Qwikswitch component](https://www.home-as
 
 ## Configuration
 
-The port can be changed from the default value of 2020.
+The default port of 2020 can be mapped to another external port.
 
 Add the devices in the config section of Hass.io add-on.
 
 Example Configuration:
 
 ```yaml
-port: '2020'
 devices:
   - string: '@129b70/rel/Study lamp'
   - string: '@16aa30/rel/Kitchen lamp'
