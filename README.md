@@ -14,7 +14,7 @@ The [qwikswitch component](https://www.home-assistant.io/components/qwikswitch/)
 2. Install the *QwikSwitch USB Hub* Addon
 3. Configure the Qwikswitch devices in the Config section.
 
-Note: Local install can be done for development: Follow step 1 and step 2 of [Local add-on testing](https://developers.home-assistant.io/docs/add-ons/testing)
+Note: Local install can be done for development: Follow step 1 and step 2 of [Local add-on testing](https://developers.home-assistant.io/docs/add-ons/tutorial)
 
 ## Usage
 
