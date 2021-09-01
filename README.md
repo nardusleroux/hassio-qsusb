@@ -10,7 +10,9 @@ The [qwikswitch component](https://www.home-assistant.io/components/qwikswitch/)
 
 ## Installation
 
-1. Add the repository through the HomeAssistant Supervisor `https://github.com/nardusleroux/hassio-qsusb`. (From the HomeAssistant frontend: *Supervisor* > *Add-on store* > *...* > *Repositories*)
+1. Add the repository to the HomeAssistant Supervisor
+   <br>[![Open your Home Assistant instance and show the add add-on repository dialog with a specific repository URL pre-filled.](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fnardusleroux%2Fhassio-qsusb)
+   `https://github.com/nardusleroux/hassio-qsusb`. (From the HomeAssistant frontend: *Supervisor* > *Add-on store* > *...* > *Repositories*)
 2. Install the *QwikSwitch USB Hub* Addon
 3. Configure the Qwikswitch devices in the Config section.
 
