@@ -32,9 +32,9 @@
     ]
   },
   "schema": {
-    "devices": {
-      "string": "str"
-  },
+    "devices": [
+      {"string": "str" }
+    ],
     "ssl": "bool"
   }
 }
