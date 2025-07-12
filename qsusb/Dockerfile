@@ -1,18 +1,17 @@
 ARG BUILD_FROM=hassioaddons/ubuntu-base:5.2.1
-# hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
 # Set shell
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Setup base system
-RUN \
-    apt-get update \
-    \
-    && apt-get install -y --no-install-recommends \
-        jq libusb-1.0 wget unzip \
-    \
-    && rm -fr \
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        jq \
+        libusb-1.0 \
+        wget \
+        unzip && \
+    rm -rf \
         /tmp/* \
         /var/{cache,log}/* \
         /var/lib/apt/lists/*
@@ -23,50 +22,33 @@ ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
 
-# Copy run.sh script which is used to run qsusb
+# Prepare working directory
 WORKDIR /qsusb
 COPY run.sh .
+RUN chmod +x run.sh
 
 # Install qsusb
 RUN \
-    FILE="qsusb_pi_V1.91.zip" \
-    && if [ "${BUILD_ARCH}" = "i386" ] \
-        || [ "${BUILD_ARCH}" = "amd64" ]; then \
-        FILE="QSUSB_linux.zip"; \
-    fi \
-    \
-    && wget https://cdn.shopify.com/s/files/1/1883/0535/files/${FILE} \
-    \
-    && unzip ${FILE} \
-    \
-    && rm ${FILE} \
-    \
-    && echo "FILE=${FILE}" > /qsusb/env.txt \
-    \
-    && printenv | grep BUILD >> /qsusb/env.txt
+    case "${BUILD_ARCH}" in \
+        armv7|armhf) FILE="qsusb_pi_V1.91_arm32.zip" ;; \
+        i386|amd64) FILE="qsusb_linux_V1.91_x86.zip" ;; \
+        *)          FILE="qsusb_pi_V1.91_arm64.zip" ;; \
+    esac && \
+    wget "https://cdn.shopify.com/s/files/1/1883/0535/files/${FILE}" && \
+    unzip "${FILE}" && \
+    rm -f "${FILE}" && \
+    echo "FILE=${FILE}" > /qsusb/env.txt && \
+    printenv | grep BUILD >> /qsusb/env.txt
 
-# QSUSB_linux.zip contains a different folder structure
-# The 64 bit version is not executable
-RUN if [ -d ./QSUSB_linux ]; then \
-        mv ./QSUSB_linux/QSUSB . ; \
+# Handle Linux version folder structure
+RUN \
+    if [ -d ./QSUSB_linux ]; then \
+        mv ./QSUSB_linux/QSUSB . && \
         chmod a+x ./QSUSB/qsusb* ; \
     fi
 
-# Copy v1.65 of the www directory.  QwikSwitch was contacted to request them to upgrade the Pi and Linux zip files
-# with the same version of the www directory as found in the Windows version.  Due to delays on their side, we are
-# bundling and deploying this with the add-on.  This will be removed once they have updated their zip files.
-# The latest version of the www pages allows relays to be put into link mode via the web interface.
-COPY www.zip .
-RUN \
-    chmod a+x run.sh \
-    \
-    && rm -rf QSUSB/www \
-    \
-    && unzip www.zip -d QSUSB/ \
-    \
-    && rm www.zip
-
-CMD [ "./run.sh" ]
+# Default command
+CMD ["./run.sh"]
 
 # Labels
 LABEL \
@@ -80,8 +62,5 @@ LABEL \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="QwikSwitch USB Hub" \
     org.label-schema.schema-version="1.0" \
-    #org.label-schema.url="" \
-    #org.label-schema.usage="" \
     org.label-schema.vcs-ref=${BUILD_REF} \
-    #org.label-schema.vcs-url="" \
     org.label-schema.vendor="QwikSwitch"
