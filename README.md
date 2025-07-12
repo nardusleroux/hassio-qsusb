@@ -6,7 +6,7 @@ Qwikswitch QSUSB hub support for Hass.io
 
 This add-on allows for support for the [Qwikswitch](https://qwikswitch.co.za/) QSUSB modem device in Hass.io.
 The add-on will communicate via USB port to QSUSB modem that communicates via RF to the Qwikswitch range of products (dimmers, relays).
-The [qwikswitch component](https://www.home-assistant.io/components/qwikswitch/) will provide support within Home-assistant. This add-on currently only supports 32bit architecture.
+The [qwikswitch component](https://www.home-assistant.io/components/qwikswitch/) will provide support within Home-assistant. This add-on supports 64bit architectures (aarch64 and x86_64).
 
 ## Installation
 
