@@ -2,7 +2,7 @@
   "name": "QwikSwitch USB Hub",
   "slug": "qsusb",
   "description": "Add-on for the QwikSwitch USB Hub",
-  "version": "0.95",
+  "version": "1.0",
   "startup": "services",
   "boot": "auto",
   "url": "https://github.com/nardusleroux/hassio-qsusb",
